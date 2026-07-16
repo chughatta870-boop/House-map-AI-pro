@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>HouseMap AI Pro — Smart Floor Plan Designer</title>
+<meta name="description" content="AI-powered professional house naksha / floor plan designer with instant PDF & PNG export." />
+<meta name="theme-color" content="#0f1720" />
+
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/favicon.png" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="HouseMap AI" />
+
+<link rel="stylesheet" href="style.css" />
+
+<!-- jsPDF for PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <button id="sidebarToggle" class="icon-btn" aria-label="Toggle menu">☰</button>
+    <div class="brand">
+      <span class="brand-mark">⌂</span>
+      <div>
+        <h1>HouseMap <span class="accent">AI</span> Pro</h1>
+        <p class="tagline">Smart Naksha Designer</p>
+      </div>
+    </div>
+    <button id="btnInstall" class="btn btn-accent hidden">Install App</button>
+  </header>
+
+  <div class="layout">
+
+    <!-- Sidebar controls -->
+    <aside class="sidebar" id="sidebar">
+
+      <section class="panel">
+        <h2>1. Plot Size (feet)</h2>
+        <div class="field-row">
+          <label>Width (ft)
+            <input type="number" id="plotWidth" min="10" max="200" step="1" />
+          </label>
+          <label>Length (ft)
+            <input type="number" id="plotLength" min="10" max="200" step="1" />
+          </label>
+        </div>
+        <p class="muted small" id="plotAreaLabel">—</p>
+      </section>
+
+      <section class="panel">
+        <h2>2. Main Entry Direction</h2>
+        <div class="entry-options">
+          <label><input type="radio" name="entrySide" value="bottom" checked> South (Bottom)</label>
+          <label><input type="radio" name="entrySide" value="top"> North (Top)</label>
+          <label><input type="radio" name="entrySide" value="left"> West (Left)</label>
+          <label><input type="radio" name="entrySide" value="right"> East (Right)</label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>3. Rooms Required <span class="badge" id="roomTotalCount">0</span></h2>
+        <div id="roomControls" class="room-controls"></div>
+      </section>
+
+      <section class="panel actions">
+        <button id="btnGenerate" class="btn btn-primary">✨ AI Naksha Generate Karein</button>
+        <div class="btn-row">
+          <button id="btnRegenerate" class="btn btn-ghost">🔄 New Variation</button>
+          <button id="btnUndo" class="btn btn-ghost">↩ Undo</button>
+        </div>
+        <button id="btnReset" class="btn btn-danger-outline">Reset All</button>
+      </section>
+
+      <section class="panel">
+        <h2>Export</h2>
+        <div class="btn-row">
+          <button id="btnExportPNG" class="btn btn-secondary">🖼 PNG</button>
+          <button id="btnExportPDF" class="btn btn-secondary">📄 PDF</button>
+        </div>
+        <button id="btnSave" class="btn btn-ghost full">💾 Save Plan</button>
+      </section>
+
+      <section class="panel">
+        <h2>Saved Plans</h2>
+        <div id="savedList" class="saved-list"></div>
+      </section>
+
+      <footer class="sidebar-footer">
+        Developed by <strong>M Ijaz</strong> · GHS 124/NB
+      </footer>
+    </aside>
+
+    <!-- Main canvas + schedule -->
+    <main class="main">
+      <div class="canvas-card">
+        <div class="canvas-wrap" id="canvasWrap">
+          <canvas id="planCanvas"></canvas>
+          <div class="empty-state" id="emptyState">
+            <span class="empty-icon">📐</span>
+            <p>Plot size aur rooms select karke <strong>"AI Naksha Generate Karein"</strong> button dabayein.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="schedule-card">
+        <h2>Room Schedule</h2>
+        <div id="roomSchedule"></div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="ai.js"></script>
+<script src="canvas.js"></script>
+<script src="planner.js"></script>
+<script src="export.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
